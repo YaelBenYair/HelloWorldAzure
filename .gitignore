@@ -1,0 +1,19 @@
+#file to ignore
+*
+.idea/
+.azure-token
+
+#execlude
+!.gitignore
+!*/
+!**.c
+!**.sh
+!**.h
+!**/Makefile
+!**.pkt
+!**.py
+!**.html
+!**.HTML
+!**.css
+!**.yml
+!**.yaml
