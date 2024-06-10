@@ -26,6 +26,7 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: 'publish'
+    publishWebProjects: false  # Add this line to indicate this is not a web project
     projects: '**/*.csproj'
     arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
 
