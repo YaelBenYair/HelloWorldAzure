@@ -10,7 +10,7 @@ pool: Default
 
 variables:
   buildConfiguration: 'Release'
-  BuildNumberFormat: '1.0.$(Year:yyyy).$(Month).$(DayOfMonth).$(Rev:.r)'
+  BuildNumberFormat: '$(BuildDefinitionName)_$(Year:yyyy).$(Month).$(DayOfMonth)$(Rev:.r).'
 
 steps:
 - task: NuGetToolInstaller@1
