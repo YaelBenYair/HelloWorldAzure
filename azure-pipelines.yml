@@ -12,6 +12,11 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
+- task: NuGetToolInstaller@1
+  inputs:
+    versionSpec: '5.5.0'
+    checkLatest: true
+
 - task: DotNetCoreCLI@2
   displayName: Restore
   inputs:
@@ -35,3 +40,10 @@ steps:
 
 - publish: $(Build.ArtifactStagingDirectory)
   artifact: hello-world
+
+- task: NuGetCommand@2
+  inputs:
+    command: 'restore'
+    restoreSolution: '**/*.csproj'
+    feedsToUse: 'select'
+    vstsFeed: 'a573a66d-a331-4b5b-89e5-37ce46c0521e/755ba64a-01e8-41bb-8970-0edb41a61e72'
