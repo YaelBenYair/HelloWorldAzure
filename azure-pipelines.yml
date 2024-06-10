@@ -9,18 +9,25 @@ trigger:
 pool: Default
 
 variables:
-  solution: '**/*.sln'
-  buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
 
 steps:
-- task: NuGetToolInstaller@1
-
-- task: NuGetCommand@2
+- task: DotNetCoreCLI@2
   inputs:
-    restoreSolution: '$(solution)'
+    command: 'restore'
+    projects: '**/*.csproj'
+
 - task: DotNetCoreCLI@2
   inputs:
     command: 'build'
-    projects: './'
+    projects: '**/*.csproj'
+    arguments: '--configuration $(buildConfiguration)'
 
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'publish'
+    projects: '**/*.csproj'
+    arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+
+- publish: $(Build.ArtifactStagingDirectory)
+  artifact: hello-world
