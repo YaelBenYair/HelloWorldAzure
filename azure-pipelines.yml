@@ -38,7 +38,7 @@ steps:
     command: 'publish'
     publishWebProjects: false  # Add this line to indicate this is not a web project
     projects: '**/*.csproj'
-    arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+    arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory) --no-build'
 
 - publish: $(Build.ArtifactStagingDirectory)
   artifact: hello-world
@@ -49,7 +49,6 @@ steps:
     command: 'pack'
     packagesToPack: '**/*.csproj'
     versioningScheme: 'off'
-    basePath: '/home/yael-by/myagent/_work/1/s/ConsoleApp1/bin/Release/net8.0/ConsoleApp1.dll'
 
 - task: NuGetCommand@2
   inputs:
