@@ -44,8 +44,6 @@ steps:
     packagesToPack: '**/*.csproj'
     configuration: $(buildConfiguration)
     outputDir: '$(Build.ArtifactStagingDirectory)'
-    versioningScheme: 'byEnvVar'
-    versionEnvVar: 'nugetVers'
 
 - task: NuGetCommand@2
   inputs:
