@@ -68,6 +68,7 @@ jobs:
   - task: SonarQubePrepare@6
     inputs:
       SonarQube: 'sonarQube-azure-pipeline'
+      configMode: file
       scannerMode: 'MSBuild'
       projectKey: 'azure-project-test'
 
