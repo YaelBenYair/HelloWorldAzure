@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "A3qoEYZUFfNANAzLPC6D3T4YK5CwzYaiSrjItAP8DWeuEUXg8psJL5BMruh2nWG0L/PXX4uWeqIMum9t29wLjw==",
+  "dgSpecHash": "T9ju3OhYWK+y0/0QMC78ZcYm17Yr1ls0lxR3bhI7XLx9x6h4zxjT7T/617Hb6be7JS7+mMKJrXRbo8vkYIP3VA==",
   "success": true,
-  "projectFilePath": "/home/yael-by/Documents/devops_rpo/devops/azure/ConsoleApp1/ConsoleApp1.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "/home/yael-by/Documents/azure/ConsoleApp1/ConsoleApp1.csproj",
+  "expectedPackageFiles": [
+    "/home/yael-by/.nuget/packages/microsoft.netcore.app.host.linux-x64/8.0.5/microsoft.netcore.app.host.linux-x64.8.0.5.nupkg.sha512"
+  ],
   "logs": []
 }
