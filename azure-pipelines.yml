@@ -38,14 +38,7 @@ steps:
     arguments: '--configuration $(buildConfiguration)'
 
 - task: DotNetCoreCLI@2
-  inputs:
-    command: 'pack'
-    packagesToPack: '*/.csproj'
-    configuration: $(buildConfiguration)
-    outputDir: '$(Build.ArtifactStagingDirectory)'
   displayName: 'Pack the project into a NuGet package'
-
-- task: DotNetCoreCLI@2
   inputs:
     command: 'pack'
     packagesToPack: '**/*.csproj'
