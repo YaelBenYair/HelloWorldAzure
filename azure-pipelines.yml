@@ -16,9 +16,10 @@ variables:
   nugetVersion: '$(Major).$(Minor).$(revision)'
   nugetProjectName: 'ConsoleApp1'
 
+
 jobs:
 - job: mainPipe
-  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
 
   steps:
   - task: DotNetCoreCLI@2
@@ -84,4 +85,15 @@ jobs:
   - task: SonarQubePublish@6
     inputs:
       pollingTimeoutSec: '300'
+
+  - task: DotNetCoreCLI@2
+    displayName: 'Pack the project into a NuGet package'
+    inputs:
+      command: 'pack'
+      packagesToPack: '**/*.csproj'
+      configuration: $(buildConfiguration)
+      arguments: '--output $(Build.ArtifactStagingDirectory) /p:PackageId=Master /p:PackageVersion=$(Build.BuildId)'
+      versioningScheme: 'byEnvVar'
+      versionEnvVar: 'nugetVersion'
+
 
