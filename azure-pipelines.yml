@@ -77,3 +77,4 @@ jobs:
   - task: SonarQubePublish@6
     inputs:
       pollingTimeoutSec: '300'
+
