@@ -92,7 +92,7 @@ jobs:
       command: 'pack'
       packagesToPack: '**/*.csproj'
       configuration: $(buildConfiguration)
-      arguments: '--output $(Build.ArtifactStagingDirectory) /p:PackageId=Master /p:PackageVersion=$(Build.BuildId)'
+      arguments: '--output $(Build.ArtifactStagingDirectory) /p:CustomPackageName=Master /p:PackageVersion=$(Build.BuildId)'
       versioningScheme: 'byEnvVar'
       versionEnvVar: 'nugetVersion'
 
