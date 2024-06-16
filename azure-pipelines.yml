@@ -45,7 +45,7 @@ steps:
     configuration: $(buildConfiguration)
     outputDir: '$(Build.ArtifactStagingDirectory)'
     versioningScheme: 'byEnvVar'
-    versionEnvVar: 'nugetVers'
+    versionEnvVar: 'nugetVersion'
 
 - script: |
     dotnet --info
