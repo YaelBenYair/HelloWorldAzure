@@ -12,6 +12,11 @@ variables:
   buildConfiguration: 'Release'
   BuildNumberFormat: '$(BuildDefinitionName)_$(Year:yyyy).$(Month).$(DayOfMonth)$(Rev:.r).'
   BUILD_BUILDNUMBER: '$(BuildNumberFormat)'
+  Major: '1'
+  Minor: '0'
+  revision: $[counter(variables['Mainor'], 1)]
+  nugetVersion: '$(Major).$(Minor).$(revision)'
+  nugetProjectName: 'ConsoleApp1'
 
 steps:
 - task: NuGetToolInstaller@1
@@ -38,17 +43,20 @@ steps:
     command: 'publish'
     publishWebProjects: false  # Add this line to indicate this is not a web project
     projects: '**/*.csproj'
-    arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory) --no-build'
+    arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
 
 - publish: $(Build.ArtifactStagingDirectory)
   artifact: hello-world
 
 
 - task: NuGetCommand@2
+  displayName: 'Create Nuget package'
   inputs:
     command: 'pack'
-    packagesToPack: '**/*.csproj'
-    versioningScheme: 'off'
+    packagesToPack: '**/$(nugetProjectName).csproj'
+    packDestination:  '$(Build.ArtifactStagingDirectory)'
+    versioningScheme: 'byEnvVar'
+    versionEnvVar: 'nugetVers'
 
 - task: NuGetCommand@2
   inputs:
