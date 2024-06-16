@@ -45,6 +45,12 @@ steps:
     configuration: $(buildConfiguration)
     outputDir: '$(Build.ArtifactStagingDirectory)'
 
+- script: |
+    dotnet --info
+    dotnet nuget locals all --clear
+    nuget locals all -clear
+  displayName: 'Verify .NET SDK Installation'
+
 - task: NuGetCommand@2
   inputs:
     command: 'push'
