@@ -44,6 +44,8 @@ steps:
     packagesToPack: '**/*.csproj'
     configuration: $(buildConfiguration)
     outputDir: '$(Build.ArtifactStagingDirectory)'
+    versioningScheme: 'byEnvVar'
+    versionEnvVar: 'nugetVers'
 
 - script: |
     dotnet --info
@@ -54,8 +56,16 @@ steps:
 - task: NuGetCommand@2
   inputs:
     command: 'push'
-    packagesToPush: '$(Build.ArtifactStagingDirectory)/*/.nupkg;!$(Build.ArtifactStagingDirectory)/*/.symbols.nupkg'
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
     nuGetFeedType: 'internal'
     publishVstsFeed: 'a573a66d-a331-4b5b-89e5-37ce46c0521e/0d56472f-3fa6-4d01-b75f-dc8c1c705b8a'
     allowPackageConflicts: true
+    skipDuplicate: true
+    
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'push'
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
+    nuGetFeedType: 'internal'
+    publishVstsFeed: 'a573a66d-a331-4b5b-89e5-37ce46c0521e/755ba64a-01e8-41bb-8970-0edb41a61e72'
     skipDuplicate: true
