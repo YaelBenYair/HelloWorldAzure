@@ -69,9 +69,9 @@ jobs:
     inputs:
       SonarQube: 'sonarQube-azure-pipeline'
       scannerMode: 'MSBuild'
-      projectKey: 'HelloWorld_HelloWorld_AZAgj76P8F9AytLPHiAo'
-      extraProperties: |
-        sonar.branch.name=$(Build.SourceBranchName)
+      projectKey: 'azure-project-test'
+
+
 
   - task: DotNetCoreCLI@2
     displayName: Build
