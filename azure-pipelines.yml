@@ -53,16 +53,8 @@ steps:
 
 - task: DotNetCoreCLI@2
   inputs:
-    command: 'custom'
-    custom: 'nuget push'
-    arguments: '$(Build.ArtifactStagingDirectory)/*.nupkg --source https://pkgs.dev.azure.com/yaelmadmon1011/a573a66d-a331-4b5b-89e5-37ce46c0521e/_packaging/9ced7f6f-8d5e-7900-9870-9a31bcb3ed49/nuget/v3/index.json --skip-duplicate'
-  displayName: 'Push NuGet package'
-
-- task: DotNetCoreCLI@2
-  inputs:
     command: 'push'
     packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
     nuGetFeedType: 'internal'
     publishVstsFeed: 'a573a66d-a331-4b5b-89e5-37ce46c0521e/755ba64a-01e8-41bb-8970-0edb41a61e72'
-    allowPackageConflicts: true
     skipDuplicate: true
