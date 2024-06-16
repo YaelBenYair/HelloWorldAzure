@@ -17,11 +17,6 @@ variables:
   nugetProjectName: 'ConsoleApp1'
 
 steps:
-- task: NuGetToolInstaller@1
-  inputs:
-    versionSpec: '5.5.1'
-    checkLatest: true
-
 - task: DotNetCoreCLI@2
   displayName: Restore
   inputs:
@@ -44,12 +39,6 @@ steps:
     outputDir: '$(Build.ArtifactStagingDirectory)'
     versioningScheme: 'byEnvVar'
     versionEnvVar: 'nugetVersion'
-
-- script: |
-    dotnet --info
-    dotnet nuget locals all --clear
-    nuget locals all -clear
-  displayName: 'Verify .NET SDK Installation'
 
 - task: NuGetCommand@2
   inputs:
