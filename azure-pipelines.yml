@@ -76,15 +76,10 @@ jobs:
     inputs:
       command: 'build'
       projects: '**/*.csproj'
-      arguments: '--configuration $(buildConfiguration)'
   
   - task: SonarQubeAnalyze@6
     inputs:
       jdkversion: 'JAVA_HOME_17_X64'
-
-  - task: SonarQubePublish@6
-    inputs:
-      pollingTimeoutSec: '300'
 
   - task: DotNetCoreCLI@2
     displayName: 'Pack the project into a NuGet package'
@@ -95,5 +90,16 @@ jobs:
       arguments: '--output $(Build.ArtifactStagingDirectory) /p:CustomPackageName=Master /p:PackageVersion=$(Build.BuildId)'
       versioningScheme: 'byEnvVar'
       versionEnvVar: 'nugetVersion'
+
+  - task: SonarQubePublish@6
+    inputs:
+      pollingTimeoutSec: '300'
+
+  - task: DotNetCoreCLI@2
+    inputs:
+      command: 'push'
+      packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
+      nuGetFeedType: 'internal'
+      publishVstsFeed: 'a573a66d-a331-4b5b-89e5-37ce46c0521e/755ba64a-01e8-41bb-8970-0edb41a61e72'
 
 
