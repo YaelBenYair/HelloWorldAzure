@@ -48,13 +48,20 @@ steps:
 - publish: $(Build.ArtifactStagingDirectory)
   artifact: hello-world
 
-
-- task: NuGetCommand@2
-  displayName: 'Create Nuget package'
+- task: DotNetCoreCLI@2
   inputs:
     command: 'pack'
-    packagesToPack: '**/$(nugetProjectName).csproj'
-    packDestination:  '$(Build.ArtifactStagingDirectory)'
+    packagesToPack: '*/.csproj'
+    configuration: $(buildConfiguration)
+    outputDir: '$(Build.ArtifactStagingDirectory)'
+  displayName: 'Pack the project into a NuGet package'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'pack'
+    packagesToPack: '**/*.csproj'
+    configuration: $(buildConfiguration)
+    outputDir: '$(Build.ArtifactStagingDirectory)'
     versioningScheme: 'byEnvVar'
     versionEnvVar: 'nugetVers'
 
