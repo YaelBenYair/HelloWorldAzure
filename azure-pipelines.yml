@@ -5,6 +5,7 @@
 
 trigger:
 - main
+- dev
 
 pool: Default
 
@@ -69,6 +70,15 @@ jobs:
       SonarQube: 'sonarQube-azure-pipeline'
       scannerMode: 'MSBuild'
       projectKey: 'HelloWorld_HelloWorld_AZAgj76P8F9AytLPHiAo'
+      extraProperties: |
+        sonar.branch.name=$(Build.SourceBranchName)
+
+  - task: DotNetCoreCLI@2
+    displayName: Build
+    inputs:
+      command: 'build'
+      projects: '**/*.csproj'
+      arguments: '--configuration $(buildConfiguration)'
   
   - task: SonarQubeAnalyze@6
     inputs:
