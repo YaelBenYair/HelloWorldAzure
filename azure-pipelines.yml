@@ -38,17 +38,6 @@ steps:
     arguments: '--configuration $(buildConfiguration)'
 
 - task: DotNetCoreCLI@2
-  displayName: Publish
-  inputs:
-    command: 'publish'
-    publishWebProjects: false  # Add this line to indicate this is not a web project
-    projects: '**/*.csproj'
-    arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
-
-- publish: $(Build.ArtifactStagingDirectory)
-  artifact: hello-world
-
-- task: DotNetCoreCLI@2
   inputs:
     command: 'pack'
     packagesToPack: '*/.csproj'
