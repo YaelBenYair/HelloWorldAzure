@@ -10,11 +10,9 @@ pool: Default
 
 variables:
   buildConfiguration: 'Release'
-  BuildNumberFormat: '$(BuildDefinitionName)_$(Year:yyyy).$(Month).$(DayOfMonth)$(Rev:.r).'
-  BUILD_BUILDNUMBER: '$(BuildNumberFormat)'
   Major: '1'
   Minor: '0'
-  revision: $[counter(variables['Mainor'], 1)]
+  revision: $[counter(variables['Minor'], 1)]
   nugetVersion: '$(Major).$(Minor).$(revision)'
   nugetProjectName: 'ConsoleApp1'
 
