@@ -71,8 +71,8 @@ jobs:
       configMode: file
       scannerMode: 'MSBuild'
       projectKey: 'azure-project-test'
-
-
+      extraProperties: |
+        sonar.branch.name=$(Build.SourceBranchName)
 
   - task: DotNetCoreCLI@2
     displayName: Build
