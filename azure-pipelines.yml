@@ -16,44 +16,57 @@ variables:
   nugetVersion: '$(Major).$(Minor).$(revision)'
   nugetProjectName: 'ConsoleApp1'
 
-steps:
-- task: DotNetCoreCLI@2
-  displayName: Restore
-  inputs:
-    command: 'restore'
-    projects: '**/*.csproj'
+jobs:
+- job: mainPipe
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
 
-- task: DotNetCoreCLI@2
-  displayName: Build
-  inputs:
-    command: 'build'
-    projects: '**/*.csproj'
-    arguments: '--configuration $(buildConfiguration)'
+  steps:
+  - task: DotNetCoreCLI@2
+    displayName: Restore
+    inputs:
+      command: 'restore'
+      projects: '**/*.csproj'
 
-- task: DotNetCoreCLI@2
-  displayName: 'Pack the project into a NuGet package'
-  inputs:
-    command: 'pack'
-    packagesToPack: '**/*.csproj'
-    configuration: $(buildConfiguration)
-    outputDir: '$(Build.ArtifactStagingDirectory)'
-    versioningScheme: 'byEnvVar'
-    versionEnvVar: 'nugetVersion'
+  - task: DotNetCoreCLI@2
+    displayName: Build
+    inputs:
+      command: 'build'
+      projects: '**/*.csproj'
+      arguments: '--configuration $(buildConfiguration)'
 
-- task: NuGetCommand@2
-  inputs:
-    command: 'push'
-    packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
-    nuGetFeedType: 'internal'
-    publishVstsFeed: 'a573a66d-a331-4b5b-89e5-37ce46c0521e/0d56472f-3fa6-4d01-b75f-dc8c1c705b8a'
+  - task: DotNetCoreCLI@2
+    displayName: 'Pack the project into a NuGet package'
+    inputs:
+      command: 'pack'
+      packagesToPack: '**/*.csproj'
+      configuration: $(buildConfiguration)
+      outputDir: '$(Build.ArtifactStagingDirectory)'
+      versioningScheme: 'byEnvVar'
+      versionEnvVar: 'nugetVersion'
 
-    
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'push'
-    packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
-    nuGetFeedType: 'internal'
-    publishVstsFeed: 'a573a66d-a331-4b5b-89e5-37ce46c0521e/755ba64a-01e8-41bb-8970-0edb41a61e72'
+  - task: NuGetCommand@2
+    inputs:
+      command: 'push'
+      packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
+      nuGetFeedType: 'internal'
+      publishVstsFeed: 'a573a66d-a331-4b5b-89e5-37ce46c0521e/0d56472f-3fa6-4d01-b75f-dc8c1c705b8a'
+
+      
+  - task: DotNetCoreCLI@2
+    inputs:
+      command: 'push'
+      packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
+      nuGetFeedType: 'internal'
+      publishVstsFeed: 'a573a66d-a331-4b5b-89e5-37ce46c0521e/755ba64a-01e8-41bb-8970-0edb41a61e72'
 
 
-
+- job: devPipe
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/dev'))
+  
+  steps:
+  - task: DotNetCoreCLI@2
+    displayName: Build
+    inputs:
+      command: 'build'
+      projects: '**/*.csproj'
+      arguments: '--configuration $(buildConfiguration)'
