@@ -69,7 +69,7 @@ jobs:
     inputs:
       SonarQube: 'sonarQube-azure-pipeline'
       scannerMode: 'MSBuild'
-      projectKey: 'azure-test'
+      projectKey: 'HelloWorld_HelloWorld_AZAhV60b8F9AytLPHiBt'
 
   - task: DotNetCoreCLI@2
     displayName: Build
@@ -86,8 +86,6 @@ jobs:
     inputs:
       command: 'pack'
       packagesToPack: '**/*.csproj'
-      configuration: $(buildConfiguration)
-      arguments: '--output $(Build.ArtifactStagingDirectory) /p:CustomPackageName=Master'
       versioningScheme: 'byEnvVar'
       versionEnvVar: 'nugetVersion'
 
