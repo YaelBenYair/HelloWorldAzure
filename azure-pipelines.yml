@@ -4,8 +4,7 @@
 # https://docs.microsoft.com/azure/devops/pipelines/apps/aspnet/build-aspnet-4
 
 trigger:
-- main
-- dev
+- master
 
 pool: Default
 
@@ -19,7 +18,7 @@ variables:
 
 jobs:
 - job: mainPipe
-  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
 
   steps:
   - task: DotNetCoreCLI@2
@@ -62,17 +61,14 @@ jobs:
 
 
 - job: devPipe
-  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
   
   steps:
   - task: SonarQubePrepare@6
     inputs:
       SonarQube: 'sonarQube-azure-pipeline'
-      configMode: file
       scannerMode: 'MSBuild'
-      projectKey: 'azure-project-test'
-      extraProperties: |
-        sonar.branch.name=$(Build.SourceBranchName)
+      projectKey: 'HelloWorld_HelloWorld_AZAgj76P8F9AytLPHiAo'
 
   - task: DotNetCoreCLI@2
     displayName: Build
